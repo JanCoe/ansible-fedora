@@ -1,0 +1,5 @@
+- name: Install system utilities.
+  become: true
+  dnf:
+    name: "{{ apps }}"
+    state: present

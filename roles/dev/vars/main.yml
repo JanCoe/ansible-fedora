@@ -1,0 +1,28 @@
+devtools: ["@development-tools", cmake, curl, gcc, make, pkgconfig, openssl-devel]
+apps:
+  - asciidoctor
+  - bat
+  - fd
+  - fzf
+  - gh
+  - git
+  - git-lfs
+  - neovim
+  - nushell
+  - ripgrep
+  - ruff
+  - ShellCheck
+  - stow
+  - tldr
+  - tmux
+  - toolbox
+  - wezterm
+  - uv
+cargo_packages: 
+  - cargo-update
+  - cargo-watch
+  - du-dust
+  - dua 
+  - hyperfine
+  - starship
+  - tokei

@@ -1,0 +1,61 @@
+- name: Install development tools. 
+  become: true
+  package:
+    name: "{{ devtools }}"
+    state: present
+
+- name: Enable Copr repositories.
+  become: true
+  dnf:
+    name: ["@copr:wezfurlong/wezterm-nightly", "@copr:lihaohong/yazi"]
+    state: present
+
+- name: Add nushell repo using template.
+  become: true
+  template:
+    src: yum.repo.j2
+    dest: /etc/yum.repos.d/fury-nushell.repo
+    mode: '0644'
+  vars:
+    repo_id: gemfury-nushell
+    repo_name: Gemfury Nushell Repo
+    baseurl: https://yum.fury.io/nushell/
+    gpgcheck: 0
+    gpgkey: https://yum.fury.io/nushell/gpg.key
+
+- name: Install CLI tools.
+  become: true
+  dnf:
+    name: "{{ apps }}"
+    state: present
+
+- name: Install rustup (if not already installed).
+  shell: |
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+  args:
+    creates: ~/.cargo/bin/rustc
+
+- name: Ensure ~/.cargo/bin is in PATH for this session.
+  shell: |
+    echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+  args:
+    creates: ~/.cargo/env
+
+- name: Install Cargo packages.
+  shell: "~/.cargo/bin/cargo install {{ item.crate }}"
+  args:
+    creates: "~/.cargo/bin/{{ item.bin }}"
+  loop:
+    - { crate: "cargo-update", bin: "cargo-install-update" }
+    - { crate: "cargo-watch", bin: "cargo-watch" }
+    - { crate: "du-dust", bin: "dust" }
+    - { crate: "dua", bin: "dua" }
+    - { crate: "hyperfine", bin: "hyperfine" }
+    - { crate: "starship", bin: "starship" }
+    - { crate: "tokei", bin: "tokei" }
+
+- name: Install Jetbrains toolbox.
+  become: true
+  dnf:
+    name: fuse-libs
+    state: present

@@ -1,0 +1,61 @@
+- name: Install Synology HyperBackupExplorer.
+  become: true
+  dnf:
+    name: libxcrypt-compat
+    state: present
+
+- name: Enable wezterm Copr repository.
+  become: true
+  dnf:
+    name: "@copr:wezfurlong/wezterm-nightly"
+    state: present
+
+- name: Add Vivaldi repo using template.
+  become: true
+  template:
+    src: yum.repo.j2
+    dest: /etc/yum.repos.d/vivaldi.repo
+    mode: '0644'
+  vars:
+    repo_id: vivaldi
+    repo_name: vivaldi
+    baseurl: https://repo.vivaldi.com/archive/rpm/x86_64
+    gpgcheck: 1
+    gpgkey: https://repo.vivaldi.com/archive/linux_signing_key.pub
+
+- name: Install applications.
+  become: true
+  dnf:
+    name: "{{ apps }}"
+    state: present
+
+- name: Ensure Flatpak is installed.
+  become: true 
+  package:
+    name: flatpak
+    state: present
+
+- name: Add Flathub remote if it doesn't exist.
+  become: true
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    method: user
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Install Flatpak apps.
+  become: true
+  community.general.flatpak:
+    name: "{{ flatpaks }}"
+    state: present
+    method: user  # or system
+
+- name: Check if Kew app exists.
+  stat:
+    path: "{{ ansible_env.HOME }}/Apps/Kew"
+  register: kew_app
+
+- name: Install kew music player.
+  command: /home/JanCoe/.dotfiles/scripts/install-kew
+  when: not kew_app.stat.exists
+

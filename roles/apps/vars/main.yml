@@ -1,0 +1,16 @@
+apps:
+  - "@vlc"
+  - cheese
+  - neomutt
+  - neovim
+  - onedrive
+  - thunderbird
+  - vivaldi-stable 
+  - wezterm
+  - yazi
+  - zoxide
+flatpaks:
+  - ch.protonmail.protonmail-bridge
+  - com.github.tchx84.Flatseal
+  - md.obsidian.Obsidian
+  - us.zoom.Zoom

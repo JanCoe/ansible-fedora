@@ -1,0 +1,8 @@
+- name: Install hyprland compositor and dynamic tiling window manager.
+  become: true
+  dnf:
+    name:
+      - hyprland
+      - hyprland-qtutils
+      - wofi
+    state: present
