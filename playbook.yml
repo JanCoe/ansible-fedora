@@ -4,8 +4,8 @@
   gather_facts: true
 
   roles:
-    #- sys
-    #- fonts
-    #- hyprland
+    - sys
+    - fonts
+    - hyprland
     - apps
-    #- dev
+    - dev
