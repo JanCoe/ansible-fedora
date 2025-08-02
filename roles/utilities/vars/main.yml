@@ -1,28 +1,49 @@
 apps:
+  # Just to make sure
+  - systemd
+  - bash
+  - coreutils
+  - dnf
+  - shadow-utils
   - "@core" 
   # Media 
   - "@multimedia" 
   - gvfs
   - pavucontrol
   - pipewire
-  - polkit
+  - pipewire-pulseaudio
   - wireplumber
   # Utilities 
   - brightnessctl
   - dnf-utils
+  - dunst
   - fastfetch
   - gnome-keyring
+  - gvfs
   - htop
+  - sddm
   - trash
   - uutils-coreutils
   - xdg-desktop-portal
   - xdg-desktop-portal-wlr
-  - xdg-user-dirs
+  - xdg-utils
   # Fonts
   - fonts
+  # Graphics stack
+  - libxkbcommon
+  - mesa-dri-drivers
+  - mesa-vulkan-drivers
+  - wayland
+  - xorg-x11-server-Xwayland
+  # Input and user environment
+  - polkit
+  - xdg-user-dirs
+  - dbus
   # Network
   - NetworkManager
+  - NetworkManager-wifi
   - nmapplet
   # Applications 
   - foot
   - Thunar
+  - neovim
