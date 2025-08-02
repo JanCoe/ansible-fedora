@@ -4,8 +4,10 @@
   gather_facts: true
 
   roles:
-    - sys
+    - post-install 
+    - utilities 
     - fonts
+    - dotfiles
     - hyprland
-    - apps
-    - dev
+    - applications
+    - development 

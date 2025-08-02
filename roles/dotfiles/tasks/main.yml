@@ -1,0 +1,31 @@
+- name: Clone dotfiles repo if not already present.
+  become: false
+  git:
+    repo: "https://github.com/JanCoe/dotfiles.git"
+    dest: "/home/{{ real_user }}/.dotfiles"
+    version: main
+    update: no
+
+- name: Ensure stow is installed.
+  become: true
+  dnf:
+    name: stow
+    state: present
+
+- name: Delete dotfiles that will conflict.
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/home/{{ real_user }}/.bash_history"
+    - "/home/{{ real_user }}/.bash_logout"
+    - "/home/{{ real_user }}/.bash_profile"
+    - "/home/{{ real_user }}/.bashrc"
+    - "/home/{{ real_user }}/.profile"
+
+- name: Run `stow .` from .dotfiles root.
+  become: false
+  command: stow .
+  args:
+    chdir: "/home/{{ real_user }}/.dotfiles"
+

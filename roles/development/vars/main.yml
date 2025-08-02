@@ -1,5 +1,6 @@
-devtools: ["@development-tools", cmake, curl, gcc, make, pkgconfig, openssl-devel]
-apps:
+real_user: "{{ lookup('env', 'SUDO_USER') | default(ansible_user_id) }}"
+dev_tools: ["@development-tools", cmake, curl, gcc, make, pkgconfig, openssl-devel]
+cli_tools:
   - asciidoctor
   - bat
   - fd

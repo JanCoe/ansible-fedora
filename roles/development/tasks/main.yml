@@ -1,7 +1,7 @@
 - name: Install development tools. 
   become: true
   package:
-    name: "{{ devtools }}"
+    name: "{{ dev_tools }}"
     state: present
 
 - name: Enable Copr repositories.
@@ -26,7 +26,7 @@
 - name: Install CLI tools.
   become: true
   dnf:
-    name: "{{ apps }}"
+    name: "{{ cli_tools }}"
     state: present
 
 - name: Install rustup (if not already installed).
@@ -59,3 +59,8 @@
   dnf:
     name: fuse-libs
     state: present
+
+- name: Create Projects directory.
+  file:
+    path: "/home/{{ real_user }}/Projects"
+    state: directory

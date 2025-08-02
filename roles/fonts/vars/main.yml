@@ -1,12 +1,14 @@
-  fonts: 
-    - ibm-plex-sans-fonts
-    - ibm-plex-serif-fonts 
-    - jetbrains-mono-fonts
-    - rsms-inter-fonts
-  themes:
-    - nordzy-icon
-    - papirus-icon-theme
-  apps:
-    - gtk2
-    - gtk-murrine-engine  # for GTK themes to render correctly
-    - lxappearance  # to set GTK appearance 
+real_user: "{{ lookup('env', 'SUDO_USER') | default(ansible_user_id) }}"
+fonts: 
+  - fonts
+  - ibm-plex-sans-fonts
+  - ibm-plex-serif-fonts 
+  - jetbrains-mono-fonts
+  - rsms-inter-fonts
+themes:
+  - nordzy-icon
+  - papirus-icon-theme
+apps:
+  - gtk2
+  - gtk-murrine-engine  # for GTK themes to render correctly
+  - lxappearance  # to set GTK appearance 

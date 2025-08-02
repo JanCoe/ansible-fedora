@@ -49,13 +49,3 @@
     name: "{{ flatpaks }}"
     state: present
     method: user  # or system
-
-- name: Check if Kew app exists.
-  stat:
-    path: "{{ ansible_env.HOME }}/Apps/Kew"
-  register: kew_app
-
-- name: Install kew music player.
-  command: /home/JanCoe/.dotfiles/scripts/install-kew
-  when: not kew_app.stat.exists
-

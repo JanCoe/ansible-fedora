@@ -1,12 +1,28 @@
-
 - name: Enable Nordzy Copr repository.
   become: true
   dnf:
     name: "@copr:rubemlrm/nordzy-icon"
     state: present
 
+- name: Clone the Nordic theme repo.
+  become: false
+  git:
+    repo: "https://github.com/EliverLara/Nordic.git"
+    dest: /home/{{ real_user }}/.themes/Nordic
+    version: main
+    update: no
+
 - name: Install fonts and themes.
   become: true
   dnf:
     name: "{{ fonts + themes + apps }}"
     state: present
+
+# What is destination?
+# - name: Clone Obsidian style.
+#   become: false
+#  git:
+#    repo: "https://github.com/EndlessReform/obsidian-nord-muted.git"
+#    dest: # What should this be? 
+#    version:
+#    update: no

@@ -1,4 +1,4 @@
-- name: Install system utilities.
+- name: Install base utilities.
   become: true
   dnf:
     name: "{{ apps }}"

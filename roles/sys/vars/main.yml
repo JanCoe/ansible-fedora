@@ -1,6 +1,0 @@
-apps:
-  - dnf-utils
-  - fastfetch
-  - htop
-  - trash
-  - uutils-coreutils
