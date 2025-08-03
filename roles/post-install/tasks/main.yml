@@ -73,6 +73,10 @@
       - libdvdcss  # for dvd support
     state: present
 
+- name: Set Openh264.
+  become: true
+  command: dnf config-manager setopt fedora-cisco-openh264.enabled=1
+
 # This pulls in all firmware. Look for ways to slim this down. Is it needed?
 #- name: Install all tainted firmware packages.
 #  become: true

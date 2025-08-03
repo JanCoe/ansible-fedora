@@ -6,9 +6,7 @@
 
 - name: Enable wezterm Copr repository.
   become: true
-  dnf:
-    name: "@copr:wezfurlong/wezterm-nightly"
-    state: present
+  command: dnf copr enable wezfurlong/wezterm-nightly -y
 
 - name: Add Vivaldi repo using template.
   become: true
@@ -35,17 +33,16 @@
     name: flatpak
     state: present
 
-- name: Add Flathub remote if it doesn't exist.
+- name: Add Flathub remote if it doesn't exist (user).
   become: true
-  community.general.flatpak_remote:
-    name: flathub
+  become_user: "{{ real_user }}"
+  command: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+
+- name: Install Flatpak apps (user).
+  become: true
+  become_user: "{{ real_user }}"
+  community.general.flatpak:
+    name: "{{ item }}"
     state: present
     method: user
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-
-- name: Install Flatpak apps.
-  become: true
-  community.general.flatpak:
-    name: "{{ flatpaks }}"
-    state: present
-    method: user  # or system
+  loop: "{{ flatpaks }}"

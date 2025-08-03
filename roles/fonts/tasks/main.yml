@@ -4,12 +4,22 @@
     name: "@copr:rubemlrm/nordzy-icon"
     state: present
 
+- name: Enable Nordzy icon repository. 
+  become: true
+  command: dnf copr enable rubemlrm/nordzy-icon -y
+
+- name: Ensure .themes directory exists.
+  file:
+    path: "/home/{{ real_user }}/.themes"
+    state: directory
+    owner: "{{ real_user }}"
+    mode: "0755"
+
 - name: Clone the Nordic theme repo.
   become: false
   git:
     repo: "https://github.com/EliverLara/Nordic.git"
-    dest: /home/{{ real_user }}/.themes/Nordic
-    version: main
+    dest: "/home/{{ real_user }}/.themes/Nordic"
     update: no
 
 - name: Install fonts and themes.

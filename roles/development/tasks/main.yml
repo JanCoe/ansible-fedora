@@ -4,11 +4,13 @@
     name: "{{ dev_tools }}"
     state: present
 
-- name: Enable Copr repositories.
+- name: Enable wezterm Copr repository.
   become: true
-  dnf:
-    name: ["@copr:wezfurlong/wezterm-nightly", "@copr:lihaohong/yazi"]
-    state: present
+  command: dnf copr enable wezfurlong/wezterm-nightly -y
+
+- name: Enable yazi Copr repository.
+  become: true
+  command: dnf copr enable lihaohong/yazi -y
 
 - name: Add nushell repo using template.
   become: true
@@ -29,30 +31,29 @@
     name: "{{ cli_tools }}"
     state: present
 
+# this doesn't work
 - name: Install rustup (if not already installed).
   shell: |
     curl https://sh.rustup.rs -sSf | sh -s -- -y
   args:
-    creates: ~/.cargo/bin/rustc
+    creates: "/home/{{ real_user }}/.cargo/bin/rustc"
 
 - name: Ensure ~/.cargo/bin is in PATH for this session.
   shell: |
-    echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
-  args:
-    creates: ~/.cargo/env
+    echo 'export PATH="/home/{{ real_user }}/.cargo/bin:$PATH"' >> "/home/{{ real_user }}/.bashrc"
 
+# this isn't working
 - name: Install Cargo packages.
-  shell: "~/.cargo/bin/cargo install {{ item.crate }}"
-  args:
-    creates: "~/.cargo/bin/{{ item.bin }}"
-  loop:
-    - { crate: "cargo-update", bin: "cargo-install-update" }
-    - { crate: "cargo-watch", bin: "cargo-watch" }
-    - { crate: "du-dust", bin: "dust" }
-    - { crate: "dua", bin: "dua" }
-    - { crate: "hyperfine", bin: "hyperfine" }
-    - { crate: "starship", bin: "starship" }
-    - { crate: "tokei", bin: "tokei" }
+  community.general.cargo:
+    name: 
+      - cargo-update
+      - cargo-watch
+      - du-dust
+      - dua
+      - hyperfine
+      - starship
+      - tokei
+    state: present
 
 - name: Install Jetbrains toolbox.
   become: true

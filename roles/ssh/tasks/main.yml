@@ -1,0 +1,29 @@
+- name: Install OpenSSH server package
+  package:
+    name: openssh-server
+    state: present
+
+- name: Start and enable SSH service
+  systemd:
+    name: sshd
+    state: started
+    enabled: true
+
+- name: Allow SSH through firewall (firewalld)
+  firewalld:
+    service: ssh
+    permanent: true
+    state: enabled
+
+- name: Reload firewall to apply changes (firewalld)
+  command: firewall-cmd --reload
+
+- name: Check SSH service status
+  systemd:
+    name: sshd
+    state: started
+  register: ssh_status
+
+- name: Debug SSH service status
+  debug:
+    msg: "SSHD service is {{ ssh_status.state }}"
