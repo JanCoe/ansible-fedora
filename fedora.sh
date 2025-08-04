@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-ansible_dir="$HOME"/ansible
-ansible_command="ansible-playbook fedora.yml --verbose" 
+directory="$HOME"/Projects/ansible-fedora
+command=(sudo ansible-playbook fedora.yml)
 
 read -s -r -p "Enter your sudo password: " password
 echo
@@ -11,21 +11,27 @@ echo
 echo "==> Installing ansible and git..."
 echo "$password" | sudo -S dnf install -y ansible git
 
-echo "==> Creating directory for ansible-fedora..."
-mkdir -p "$ansible_dir"
+if [[ ! -d "$directory" ]]; then
+    echo "==> Cloning ansible-fedora..."
+    mkdir -p "$directory"
+    git clone https://github.com/JanCoe/ansible-fedora.git "$directory"
+fi
 
-echo "==> Cloning ansible-fedora..."
-git clone https://github.com/JanCoe/ansible-fedora.git "$ansible_dir"
-cd "$ansible_dir"
+cd "$directory"
 
-echo "==> Running playbook..."
-echo "$password" | sudo -S "$ansible_command" --check
+read -r -p "Run playbook in check mode? [Y/n]" ans
+ans=${ans:-yes}
+case "$ans" in
+    [yY][eE][sS]|[yY])
+        command_check=("${command[@]}" --check)
+        "${command_check[@]}" ;;
+esac
 
-read -r -p "Run again for real (not in check mode)? [Y/n]" ans
+read -r -p "Run playbook for real? [Y/n]" ans
 ans=${ans:-yes}
 case "$ans" in 
     [yY][eE][sS]|[yY])
-        echo "$password" | sudo -S "$ansible_command" ;;
+        "${command[@]}" ;;
     *)
-        echo "Exit without running playbook" ;;
+        echo "Exiting without running playbook." ;;
 esac
