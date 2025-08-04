@@ -1,6 +1,6 @@
 - name: Install development tools. 
   become: true
-  package:
+  ansible.builtin.dnf:
     name: "{{ dev_tools }}"
     state: present
 
@@ -27,7 +27,7 @@
 
 - name: Install CLI tools.
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ cli_tools }}"
     state: present
 

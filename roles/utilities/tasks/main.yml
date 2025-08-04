@@ -1,5 +1,5 @@
 - name: Install base utilities.
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ apps }}"
     state: present

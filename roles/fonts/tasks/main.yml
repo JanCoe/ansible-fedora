@@ -1,9 +1,3 @@
-- name: Enable Nordzy Copr repository.
-  become: true
-  dnf:
-    name: "@copr:rubemlrm/nordzy-icon"
-    state: present
-
 - name: Enable Nordzy icon repository. 
   become: true
   command: dnf copr enable rubemlrm/nordzy-icon -y
@@ -24,7 +18,7 @@
 
 - name: Install fonts and themes.
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ fonts + themes + apps }}"
     state: present
 

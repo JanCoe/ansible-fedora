@@ -1,6 +1,6 @@
 - name: Install Synology HyperBackupExplorer.
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: libxcrypt-compat
     state: present
 
@@ -23,13 +23,13 @@
 
 - name: Install applications.
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ apps }}"
     state: present
 
 - name: Ensure Flatpak is installed.
   become: true 
-  package:
+  ansible.builtin.dnf:
     name: flatpak
     state: present
 

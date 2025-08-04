@@ -2,20 +2,30 @@
 
 set -euo pipefail
 
-ansible_dir="$HOME"/Projects/ansible-fedora_xxx
+ansible_dir="$HOME"/ansible
+ansible_command="ansible-playbook fedora.yml --verbose" 
 
-read -s -r -p "Enter your sudo password: " pwd
+read -s -r -p "Enter your sudo password: " password
 echo
 
-printf "==> Installing ansible and git...\n"
-echo "$pwd" | sudo -S dnf install -y ansible git
+echo "==> Installing ansible and git..."
+echo "$password" | sudo -S dnf install -y ansible git
 
-printf "==> Creating directory for ansible-fedora...\n"
+echo "==> Creating directory for ansible-fedora..."
 mkdir -p "$ansible_dir"
 
-printf "==> Cloning ansible-fedora...\n"
+echo "==> Cloning ansible-fedora..."
 git clone https://github.com/JanCoe/ansible-fedora.git "$ansible_dir"
 cd "$ansible_dir"
 
-printf "==> Running playbook...\n"
-echo "$pwd" | sudo ansible-playbook fedora.yml --verbose --inventory localhost
+echo "==> Running playbook..."
+echo "$password" | sudo -S "$ansible_command" --check
+
+read -r -p "Run again for real (not in check mode)? [Y/n]" ans
+ans=${ans:-yes}
+case "$ans" in 
+    [yY][eE][sS]|[yY])
+        echo "$password" | sudo -S "$ansible_command" ;;
+    *)
+        echo "Exit without running playbook" ;;
+esac

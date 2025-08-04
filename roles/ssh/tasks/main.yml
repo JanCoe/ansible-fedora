@@ -1,5 +1,5 @@
 - name: Install OpenSSH server package
-  package:
+  ansible.builtin.dnf:
     name: openssh-server
     state: present
 
@@ -16,7 +16,7 @@
     state: enabled
 
 - name: Reload firewall to apply changes (firewalld)
-  command: firewall-cmd --reload
+  ansible.builtin.command: firewall-cmd --reload
 
 - name: Check SSH service status
   systemd:

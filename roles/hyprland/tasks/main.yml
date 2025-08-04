@@ -1,6 +1,6 @@
 - name: Install hyprland compositor and dynamic tiling window manager and complementary apps.
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name:
       - hyprland
       - hyprland-qtutils
