@@ -47,3 +47,5 @@ apps:
   - foot
   - Thunar
   - neovim
+  - zathora
+  - zathora-pdf-poppler

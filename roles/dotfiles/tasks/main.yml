@@ -29,3 +29,14 @@
   args:
     chdir: "/home/{{ real_user }}/.dotfiles"
 
+- name: Clone tmux plugins.
+  become: false
+  git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "/home/{{ real_user }}/.config/tmux/plugins/tpm"
+    version: main
+    update: no
+
+- name: Install tmux plugins.
+  become: false
+  ansible.builtin.command: /"home/{{ real_user }}/.config/tmux/plugins/tpm/bin/install_plugins"

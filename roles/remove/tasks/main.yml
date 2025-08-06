@@ -1,0 +1,7 @@
+- name: Remove applications not wanted.
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - firefox 
+      - kitty
+    state: absent 
