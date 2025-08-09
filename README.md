@@ -1,4 +1,4 @@
-This repo provides a minimal Fedora install with hyprland.
+This repo contains roles for setting up a Fedora installation.
 
 I start with the Sway Spin and add hyprland from there. In future, investigate doing a minimal netinstall instead, and specifying all the required packages.
 
