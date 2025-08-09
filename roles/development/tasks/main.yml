@@ -10,7 +10,7 @@
 
 - name: Enable yazi Copr repository.
   become: true
-  command: dnf copr enable lihaohong/yazi -y
+  ansible.builtin.command: dnf copr enable lihaohong/yazi -y
 
 - name: Add nushell repo using template.
   become: true
@@ -31,12 +31,21 @@
     name: "{{ cli_tools }}"
     state: present
 
-# this doesn't work
-- name: Install rustup (if not already installed).
-  shell: |
-    curl https://sh.rustup.rs -sSf | sh -s -- -y
+- name: Install Rust toolchain.
+  become: true 
+  ansible.builtin.dnf:
+    name: rustup
+    state: present
+
+- name: Install Rust toolchain.
+  ansible.builtin.command:
+    cmd: rustup install stable
+  become: true 
+  become_user: "{{ real_user }}"
+  environment:
+    PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
   args:
-    creates: "/home/{{ real_user }}/.cargo/bin/rustc"
+    creates: "/home/{{ real_user }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu"
 
 - name: Ensure ~/.cargo/bin is in PATH for this session.
   shell: |
@@ -54,6 +63,11 @@
       - starship
       - tokei
     state: present
+    executable: "/home/{{ real_user }}/.cargo/bin/cargo"
+  become: true
+  become_user: "{{ real_user }}"
+  environment:
+    PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
 
 - name: Install Jetbrains toolbox.
   become: true

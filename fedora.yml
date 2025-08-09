@@ -6,12 +6,12 @@
     real_user: "{{ lookup('env', 'SUDO_USER') | default(ansible_user_id) }}"
 
   roles:
-    - post-install 
-    - ssh 
-    - utilities 
-    - fonts
-    - dotfiles
-    - hyprland
-    - applications
+    # - post-install 
+    # - ssh 
+    # - utilities 
+    # - fonts
+    # - dotfiles
+    # - hyprland
+    # - applications
     - development
-    - remove
+    # - remove
