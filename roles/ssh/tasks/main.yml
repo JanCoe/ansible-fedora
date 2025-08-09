@@ -4,13 +4,13 @@
     state: present
 
 - name: Start and enable SSH service
-  systemd:
+  ansible.builtin.systemd:
     name: sshd
     state: started
     enabled: true
 
 - name: Allow SSH through firewall (firewalld)
-  firewalld:
+  ansible.builtin.firewalld:
     service: ssh
     permanent: true
     state: enabled
@@ -19,11 +19,11 @@
   ansible.builtin.command: firewall-cmd --reload
 
 - name: Check SSH service status
-  systemd:
+  ansible.builtin.systemd:
     name: sshd
     state: started
   register: ssh_status
 
 - name: Debug SSH service status
-  debug:
+  ansible.builtin.debug:
     msg: "SSHD service is {{ ssh_status.state }}"

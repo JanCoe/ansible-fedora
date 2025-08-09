@@ -1,6 +1,6 @@
 - name: Clone dotfiles repo if not already present.
   become: false
-  git:
+  ansible.builtin.git:
     repo: "https://github.com/JanCoe/dotfiles.git"
     dest: "/home/{{ real_user }}/.dotfiles"
     version: main
@@ -13,7 +13,7 @@
     state: present
 
 - name: Delete dotfiles that will conflict.
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop:
@@ -25,13 +25,13 @@
 
 - name: Run `stow .` from .dotfiles root.
   become: false
-  command: stow .
+  ansible.builtin.command: stow .
   args:
     chdir: "/home/{{ real_user }}/.dotfiles"
 
 - name: Clone tmux plugins.
   become: false
-  git:
+  ansible.builtin.git:
     repo: "https://github.com/tmux-plugins/tpm"
     dest: "/home/{{ real_user }}/.config/tmux/plugins/tpm"
     version: main

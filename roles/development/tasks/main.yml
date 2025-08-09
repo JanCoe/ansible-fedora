@@ -6,7 +6,7 @@
 
 - name: Enable wezterm Copr repository.
   become: true
-  command: dnf copr enable wezfurlong/wezterm-nightly -y
+  ansible.builtin.command: dnf copr enable wezfurlong/wezterm-nightly -y
 
 - name: Enable yazi Copr repository.
   become: true
@@ -14,7 +14,7 @@
 
 - name: Add nushell repo using template.
   become: true
-  template:
+  ansible.builtin.template:
     src: yum.repo.j2
     dest: /etc/yum.repos.d/fury-nushell.repo
     mode: '0644'
@@ -71,11 +71,11 @@
 
 - name: Install Jetbrains toolbox.
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: fuse-libs
     state: present
 
 - name: Create Projects directory.
-  file:
+  ansible.builtin.file:
     path: "/home/{{ real_user }}/Projects"
     state: directory

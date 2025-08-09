@@ -6,11 +6,11 @@
 
 - name: Enable wezterm Copr repository.
   become: true
-  command: dnf copr enable wezfurlong/wezterm-nightly -y
+  ansible.builtin.command: dnf copr enable wezfurlong/wezterm-nightly -y
 
 - name: Add Vivaldi repo using template.
   become: true
-  template:
+  ansible.builtin.template:
     src: yum.repo.j2
     dest: /etc/yum.repos.d/vivaldi.repo
     mode: '0644'
@@ -36,7 +36,7 @@
 - name: Add Flathub remote if it doesn't exist (user).
   become: true
   become_user: "{{ real_user }}"
-  command: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+  ansible.builtin.command: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
 
 - name: Install Flatpak apps (user).
   become: true
