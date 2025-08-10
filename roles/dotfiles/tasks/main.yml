@@ -6,11 +6,20 @@
     version: main
     update: no
 
-- name: Ensure stow is installed.
-  become: true
+- name: Install stow on Fedora (dnf).
   ansible.builtin.dnf:
     name: stow
     state: present
+  when: ansible_facts['os_family'] == "RedHat"
+  become: true
+
+- name: Install stow on macOS (brew).
+  community.general.brew:
+    name: stow
+    state: present
+  when: ansible_facts['os_family'] == "Darwin"
+  become: false
+  become_user: "{{ real_user }}"
 
 - name: Delete dotfiles that will conflict.
   ansible.builtin.file:

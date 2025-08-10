@@ -31,44 +31,6 @@
     name: "{{ cli_tools }}"
     state: present
 
-- name: Install Rust toolchain.
-  become: true 
-  ansible.builtin.dnf:
-    name: rustup
-    state: present
-
-- name: Install Rust toolchain.
-  ansible.builtin.command:
-    cmd: rustup install stable
-  become: true 
-  become_user: "{{ real_user }}"
-  environment:
-    PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
-  args:
-    creates: "/home/{{ real_user }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu"
-
-- name: Ensure ~/.cargo/bin is in PATH for this session.
-  shell: |
-    echo 'export PATH="/home/{{ real_user }}/.cargo/bin:$PATH"' >> "/home/{{ real_user }}/.bashrc"
-
-# this isn't working
-- name: Install Cargo packages.
-  community.general.cargo:
-    name: 
-      - cargo-update
-      - cargo-watch
-      - du-dust
-      - dua
-      - hyperfine
-      - starship
-      - tokei
-    state: present
-    executable: "/home/{{ real_user }}/.cargo/bin/cargo"
-  become: true
-  become_user: "{{ real_user }}"
-  environment:
-    PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
-
 - name: Install Jetbrains toolbox.
   become: true
   ansible.builtin.dnf:
