@@ -1,0 +1,11 @@
+- name: Setup Mac installation.
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    real_user: "{{ lookup('env', 'SUDO_USER') | default(ansible_user_id) }}"
+
+  roles:
+    - dotfiles
+    - mac
+    - development-rust

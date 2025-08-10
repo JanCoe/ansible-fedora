@@ -1,0 +1,35 @@
+- name: Check if Xcode Command Line Tools are installed.
+  ansible.builtin.command: xcode-select -p
+  register: xcode_select
+  ignore_errors: true 
+
+- name: Install Xcode Command Line Tools (if not installed).
+  ansible.builtin.command: xcode-select --install
+  when: xcode_select.rc != 0
+  async: 0
+  poll: 0
+  ignore_errors: true 
+
+- name: Install Homebrew.
+  ansible.builtin.shell: |
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  args:
+    creates: /home/{{ real_user }}/homebrew/bin/brew
+  environment:
+    CI: "1"
+
+- name: Copy Brewfile from role to user home.
+  ansible.builtin.copy:
+    src: Brewfile
+    dest: /home/{{ real_user }}/Brewfile
+    owner: "{{ real_user }}"
+    group: "{{ real_user }}"
+    mode: '0644'
+
+- name: Install brews from Brewfile
+  ansible.builtin.command:
+    cmd: brew bundle --file /home/{{ real_user }}/Brewfile
+  environment:
+    PATH: "/home/{{ real_user }}/homebrew/bin:{{ ansible_env.PATH }}"
+  become: true 
+  become_user: "{{ real_user }}"

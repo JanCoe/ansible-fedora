@@ -1,0 +1,58 @@
+- name: Install Rust on Fedora.
+  block:
+    - name: Install Rust toolchain.
+      become: true 
+      ansible.builtin.dnf:
+        name: rustup
+        state: present
+
+    - name: Install Rust toolchain.
+      ansible.builtin.command:
+        cmd: rustup install stable
+      become: true 
+      become_user: "{{ real_user }}"
+      environment:
+        PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
+      args:
+        creates: "/home/{{ real_user }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu"
+  when: asinble_facts['os_family'] == "RedHat"
+
+- name: Install Rust on macOS using Homebrew.
+  block:
+    - name: Install rustup-init via Homebrew
+      community.general.brew:
+        name: rustup-init
+        state: present
+      become: false
+      become_user: "{{ real_user }}"
+
+    - name: Run rustup-init (non-interactive).
+      ansible.builtin.command: rustup-init -y
+      become: false
+      become_user: "{{ real_user }}"
+      environment:
+        PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
+      args:
+        creates: "/home/{{ real_user }}/.cargo/bin/rustc"
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Ensure ~/.cargo/bin is in PATH for this session.
+  shell: |
+    echo 'export PATH="/home/{{ real_user }}/.cargo/bin:$PATH"' >> "/home/{{ real_user }}/.bashrc"
+
+- name: Install Cargo packages.
+  community.general.cargo:
+    name: 
+      - cargo-update
+      - cargo-watch
+      - du-dust
+      - dua
+      - hyperfine
+      - starship
+      - tokei
+    state: present
+    executable: "/home/{{ real_user }}/.cargo/bin/cargo"
+  become: true
+  become_user: "{{ real_user }}"
+  environment:
+    PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
