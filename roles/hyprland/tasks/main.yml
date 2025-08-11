@@ -12,6 +12,7 @@
       - hyprpaper
       - hyprshot
       - mako 
+      - uwsm
       - waybar
       - wofi
     state: present

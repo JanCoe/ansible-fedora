@@ -77,6 +77,17 @@
   become: true
   ansible.builtin.command: dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
+- name: Ensure Flatpak is installed.
+  become: true 
+  ansible.builtin.dnf:
+    name: flatpak
+    state: present
+
+- name: Add Flathub remote if it doesn't exist (user).
+  become: true
+  become_user: "{{ real_user }}"
+  ansible.builtin.command: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+
 # This pulls in all firmware. Look for ways to slim this down. Is it needed?
 #- name: Install all tainted firmware packages.
 #  become: true

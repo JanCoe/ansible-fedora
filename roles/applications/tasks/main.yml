@@ -1,4 +1,4 @@
-- name: Install Synology HyperBackupExplorer.
+- name: Install library needed for Synology HyperBackupExplorer.
   become: true
   ansible.builtin.dnf:
     name: libxcrypt-compat
@@ -26,17 +26,6 @@
   ansible.builtin.dnf:
     name: "{{ apps }}"
     state: present
-
-- name: Ensure Flatpak is installed.
-  become: true 
-  ansible.builtin.dnf:
-    name: flatpak
-    state: present
-
-- name: Add Flathub remote if it doesn't exist (user).
-  become: true
-  become_user: "{{ real_user }}"
-  ansible.builtin.command: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
 
 - name: Install Flatpak apps (user).
   become: true
