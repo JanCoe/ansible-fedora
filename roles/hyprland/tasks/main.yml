@@ -16,3 +16,15 @@
       - waybar
       - wofi
     state: present
+
+- name: Configure sddm to use Wayland.
+  become: true
+  ansible.builtin.ini_file:
+    path: /etc/sddm.conf
+    section: General 
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    create: false
+  loop:
+    - { option: DisplayServer, value: wayland }
+

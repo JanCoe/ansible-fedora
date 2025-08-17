@@ -42,6 +42,20 @@
 - name: Punch a hole in the sandbox to connect to dotfiles.
   ansible.builtin.command: flatpak override --user --filesystem=home --env=SHELL=/usr/bin/bash --env=TERM=xterm-256color com.jetbrains.PyCharm-Professional
 
+- name: Install docker.
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - docker
+      - docker-compose
+    state: present 
+
+- name: Start and enable docker service.
+  ansible.builtin.systemd:
+    name: docker 
+    state: started
+    enabled: true
+
 - name: Create Projects directory.
   ansible.builtin.file:
     path: "/home/{{ real_user }}/Projects"
