@@ -21,6 +21,22 @@
     gpgcheck: 1
     gpgkey: https://repo.vivaldi.com/archive/linux_signing_key.pub
 
+- name: Download Zoom rpm.
+  ansible.builtin.get_url:
+    url: "https://zoom.us/client/latest/zoom_x86_64.rpm"
+    dest: "/tmp/zoom.rpm"
+    mode: "0644"
+
+- name: Install Zoom rpm.
+  ansible.builtin.dnf:
+    name: "/tmp/zoom.rpm"
+    state: present
+
+- name: Clean up RPM
+  ansible.builtin.file:
+    path: "/tmp/zoom.rpm"
+    state: absent
+
 - name: Install applications.
   become: true
   ansible.builtin.dnf:

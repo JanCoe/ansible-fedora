@@ -11,8 +11,8 @@
 #    - utilities 
 #    - fonts
 #    - dotfiles
-    - hyprland
-#    - applications
+#    - hyprland
+     - applications
 #    - development
 #    - development-rust
 #    - remove
