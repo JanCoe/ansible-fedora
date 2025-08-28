@@ -1,4 +1,4 @@
-- name: Remove applications not wanted.
+- name: Remove applications not wanted
   become: true
   ansible.builtin.dnf:
     name:

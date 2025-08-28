@@ -1,4 +1,4 @@
-- name: Install base utilities.
+- name: Install base utilities
   become: true
   ansible.builtin.dnf:
     name: "{{ apps }}"

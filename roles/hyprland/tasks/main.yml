@@ -1,8 +1,8 @@
-- name: Enable copr repo to get latest version.
+- name: Enable copr repo to get latest version
   become: true
   ansible.builtin.command: dnf copr enable solopasha/hyprland
 
-- name: Install hyprland compositor and dynamic tiling window manager and complementary apps.
+- name: Install hyprland compositor and dynamic tiling window manager and complementary apps
   become: true
   ansible.builtin.dnf:
     name:
@@ -17,7 +17,7 @@
       - wofi
     state: present
 
-- name: Configure sddm to use Wayland.
+- name: Configure sddm to use Wayland
   become: true
   ansible.builtin.ini_file:
     path: /etc/sddm.conf
@@ -27,4 +27,3 @@
     create: false
   loop:
     - { option: DisplayServer, value: wayland }
-

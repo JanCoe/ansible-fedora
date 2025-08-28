@@ -1,46 +1,10 @@
-- name: Ensure /etc/dnf/dnf.conf exists.
-  become: true
-  ansible.builtin.file:
-    path: /etc/dnf/dnf.conf
-    state: touch
-    mode: '0644'
-
-- name: Configure DNF global options.
-  become: true
-  ansible.builtin.ini_file:
-    path: /etc/dnf/dnf.conf
-    section: main
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    create: false
-  loop:
-    - { option: fastestmirror,         value: 'True' }
-    - { option: keepcache,             value: 'True' }
-    - { option: defaultyes,            value: 'True' }
-    - { option: skip_unavailable,      value: 'True' }
-    - { option: max_parallel_downloads, value: '10' }
-    - { option: install_weak_deps,     value: 'False' }
-
-- name: Update all packages.
-  become: true
-  ansible.builtin.dnf:
-    name: "*"
-    state: latest
-    update_cache: True
-  register: update_result
-
-# - name: Reboot if packages were updated
-#  reboot:
-#    reboot_timeout: 600
-#  when: update_result.changed
-
-- name: Get Fedora version.
+- name: Get Fedora version
   become: true
   ansible.builtin.command: rpm -E %fedora
   register: fedora_version
   changed_when: false
 
-- name: Add RPM Fusion Repository.
+- name: Add RPM Fusion Repository
   become: true
   ansible.builtin.dnf:
     # name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version.stdout }}.noarch.rpm"
@@ -48,14 +12,14 @@
     disable_gpg_check: true
     state: "present"
 
-- name: Add RPM Non-Free Fusion Repository.
+- name: Add RPM Non-Free Fusion Repository
   become: true
   ansible.builtin.dnf:
     name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-42.noarch.rpm"
     disable_gpg_check: true
     state: present
 
-- name: Ensure Fedora’s Cisco openh264 repo is enabled.
+- name: Ensure Fedora’s Cisco openh264 repo is enabled
   become: true
   ansible.builtin.ini_file:
     path: /etc/yum.repos.d/fedora-cisco-openh264.repo
@@ -64,7 +28,7 @@
     value: "1"
     backup: yes
 
-- name: Enable RPM Fusion repos.
+- name: Enable RPM Fusion repos
   become: true
   ansible.builtin.dnf:
     name:
@@ -73,17 +37,17 @@
       - libdvdcss  # for dvd support
     state: present
 
-- name: Set Openh264.
+- name: Set Openh264
   become: true
   ansible.builtin.command: dnf config-manager setopt fedora-cisco-openh264.enabled=1
 
-- name: Ensure Flatpak is installed.
+- name: Ensure Flatpak is installed
   become: true 
   ansible.builtin.dnf:
     name: flatpak
     state: present
 
-- name: Add Flathub remote if it doesn't exist (user).
+- name: Add Flathub remote if it doesn't exist (user)
   become: true
   become_user: "{{ real_user }}"
   ansible.builtin.command: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo

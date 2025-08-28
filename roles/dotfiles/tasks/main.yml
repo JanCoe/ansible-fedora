@@ -1,4 +1,4 @@
-- name: Clone dotfiles repo if not already present.
+- name: Clone dotfiles repo if not already present
   become: false
   ansible.builtin.git:
     repo: "https://github.com/JanCoe/dotfiles.git"
@@ -6,22 +6,22 @@
     version: main
     update: no
 
-- name: Install stow on Fedora (dnf).
+- name: Install stow on Fedora (dnf)
   ansible.builtin.dnf:
     name: stow
     state: present
   when: ansible_facts['os_family'] == "RedHat"
   become: true
 
-- name: Install stow on macOS (brew).
-  community.general.brew:
-    name: stow
-    state: present
-  when: ansible_facts['os_family'] == "Darwin"
-  become: false
-  become_user: "{{ real_user }}"
+# - name: Install stow on macOS (brew).
+#  community.general.brew:
+#    name: stow
+#    state: present
+#  when: ansible_facts['os_family'] == "Darwin"
+#  become: false
+#  become_user: "{{ real_user }}"
 
-- name: Delete dotfiles that will conflict.
+- name: Delete dotfiles that will conflict
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
@@ -32,20 +32,20 @@
     - "/home/{{ real_user }}/.bashrc"
     - "/home/{{ real_user }}/.profile"
 
-- name: Run `stow .` from .dotfiles root.
+- name: Run `stow .` from .dotfiles root
   become: false
   ansible.builtin.command: stow .
   args:
     chdir: "/home/{{ real_user }}/.dotfiles"
 
-- name: Clone tmux plugins.
-  become: false
-  ansible.builtin.git:
-    repo: "https://github.com/tmux-plugins/tpm"
-    dest: "/home/{{ real_user }}/.config/tmux/plugins/tpm"
-    version: main
-    update: no
+#- name: Clone tmux plugins
+#  become: false
+#  ansible.builtin.git:
+#    repo: "https://github.com/tmux-plugins/tpm"
+#    dest: "/home/{{ real_user }}/.config/tmux/plugins/tpm"
+#    version: main
+#    update: no
 
-- name: Install tmux plugins.
-  become: false
-  ansible.builtin.command: /"home/{{ real_user }}/.config/tmux/plugins/tpm/bin/install_plugins"
+#- name: Install tmux plugins
+#  become: false
+#  ansible.builtin.command: /"home/{{ real_user }}/.config/tmux/plugins/tpm/bin/install_plugins"

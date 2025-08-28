@@ -1,29 +1,29 @@
-- name: Enable Nordzy icon repository. 
+- name: Enable Nordzy icon repository
   become: true
   ansible.builtin.command: dnf copr enable rubemlrm/nordzy-icon -y
 
-- name: Ensure .themes directory exists.
+- name: Ensure .themes directory exists
   ansible.builtin.file:
     path: "/home/{{ real_user }}/.themes"
     state: directory
     owner: "{{ real_user }}"
     mode: "0755"
 
-- name: Clone the Nordic theme repo.
+- name: Clone the Nordic theme repo
   become: false
   ansible.builtin.git:
     repo: "https://github.com/EliverLara/Nordic.git"
     dest: "/home/{{ real_user }}/.themes/Nordic"
     update: no
 
-- name: Install fonts and themes.
+- name: Install fonts and themes
   become: true
   ansible.builtin.dnf:
     name: "{{ fonts + themes + apps }}"
     state: present
 
 # What is destination?
-# - name: Clone Obsidian style.
+# - name: Clone Obsidian style
 #   become: false
 #  ansible.builtin.git:
 #    repo: "https://github.com/EndlessReform/obsidian-nord-muted.git"

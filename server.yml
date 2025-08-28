@@ -1,4 +1,4 @@
-- name: Fedora installation with hyprland.
+- name: Fedora server installation
   hosts: localhost
   connection: local
   gather_facts: true
@@ -7,14 +7,6 @@
 
   roles:
     - dnf-config
-    - post-install 
     - ssh 
-    - utilities 
-    - fonts
     - dotfiles
-    - hyprland
-    - applications
     - containers
-    - development
-    - development-rust
-    - remove

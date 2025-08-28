@@ -1,14 +1,14 @@
-- name: Install library needed for Synology HyperBackupExplorer.
+- name: Install library needed for Synology HyperBackupExplorer
   become: true
   ansible.builtin.dnf:
     name: libxcrypt-compat
     state: present
 
-- name: Enable wezterm Copr repository.
+- name: Enable wezterm Copr repository
   become: true
   ansible.builtin.command: dnf copr enable wezfurlong/wezterm-nightly -y
 
-- name: Add Vivaldi repo using template.
+- name: Add Vivaldi repo using template
   become: true
   ansible.builtin.template:
     src: yum.repo.j2
@@ -21,13 +21,13 @@
     gpgcheck: 1
     gpgkey: https://repo.vivaldi.com/archive/linux_signing_key.pub
 
-- name: Download Zoom rpm.
+- name: Download Zoom rpm
   ansible.builtin.get_url:
     url: "https://zoom.us/client/latest/zoom_x86_64.rpm"
     dest: "/tmp/zoom.rpm"
     mode: "0644"
 
-- name: Install Zoom rpm.
+- name: Install Zoom rpm
   ansible.builtin.dnf:
     name: "/tmp/zoom.rpm"
     state: present
@@ -37,13 +37,13 @@
     path: "/tmp/zoom.rpm"
     state: absent
 
-- name: Install applications.
+- name: Install applications
   become: true
   ansible.builtin.dnf:
     name: "{{ apps }}"
     state: present
 
-- name: Install Flatpak apps (user).
+- name: Install Flatpak apps (user)
   become: true
   become_user: "{{ real_user }}"
   community.general.flatpak:
@@ -51,3 +51,12 @@
     state: present
     method: user
   loop: "{{ flatpaks }}"
+
+- name: Apps to connect iPhone
+  become: true
+  asible.builtin.dnf:
+    name:
+      - libimobiledevice-utils
+      - fuse
+    state: present
+

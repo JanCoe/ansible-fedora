@@ -1,0 +1,35 @@
+- name: Ensure /etc/dnf/dnf.conf exists
+  become: true
+  ansible.builtin.file:
+    path: /etc/dnf/dnf.conf
+    state: touch
+    mode: '0644'
+
+- name: Configure DNF global options
+  become: true
+  ansible.builtin.ini_file:
+    path: /etc/dnf/dnf.conf
+    section: main
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    create: false
+  loop:
+    - { option: fastestmirror,         value: 'True' }
+    - { option: keepcache,             value: 'True' }
+    - { option: defaultyes,            value: 'True' }
+    - { option: skip_unavailable,      value: 'True' }
+    - { option: max_parallel_downloads, value: '10' }
+    - { option: install_weak_deps,     value: 'False' }
+
+- name: Update all packages
+  become: true
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_cache: True
+  register: update_result
+
+# - name: Reboot if packages were updated
+#  reboot:
+#    reboot_timeout: 600
+#  when: update_result.changed

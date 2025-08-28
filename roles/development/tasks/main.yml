@@ -1,18 +1,18 @@
-- name: Install development tools. 
+- name: Install development tools
   become: true
   ansible.builtin.dnf:
     name: "{{ dev_tools }}"
     state: present
 
-- name: Enable wezterm Copr repository.
+- name: Enable wezterm Copr repository
   become: true
   ansible.builtin.command: dnf copr enable wezfurlong/wezterm-nightly -y
 
-- name: Enable yazi Copr repository.
+- name: Enable yazi Copr repository
   become: true
   ansible.builtin.command: dnf copr enable lihaohong/yazi -y
 
-- name: Add nushell repo using template.
+- name: Add nushell repo using template
   become: true
   ansible.builtin.template:
     src: yum.repo.j2
@@ -25,13 +25,13 @@
     gpgcheck: 0
     gpgkey: https://yum.fury.io/nushell/gpg.key
 
-- name: Install CLI tools.
+- name: Install CLI tools
   become: true
   ansible.builtin.dnf:
     name: "{{ cli_tools }}"
     state: present
 
-- name: Install PyCharm as a flatpak.
+- name: Install PyCharm as a flatpak
   become: true
   become_user: "{{ real_user }}"
   community.general.flatpak:
@@ -39,24 +39,10 @@
     state: present
     method: user
 
-- name: Punch a hole in the sandbox to connect to dotfiles.
+- name: Punch a hole in the sandbox to connect to dotfiles
   ansible.builtin.command: flatpak override --user --filesystem=home --env=SHELL=/usr/bin/bash --env=TERM=xterm-256color com.jetbrains.PyCharm-Professional
 
-- name: Install docker.
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - docker
-      - docker-compose
-    state: present 
-
-- name: Start and enable docker service.
-  ansible.builtin.systemd:
-    name: docker 
-    state: started
-    enabled: true
-
-- name: Create Projects directory.
+- name: Create Projects directory
   ansible.builtin.file:
     path: "/home/{{ real_user }}/Projects"
     state: directory
