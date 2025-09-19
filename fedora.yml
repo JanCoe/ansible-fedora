@@ -1,4 +1,4 @@
-- name: Fedora installation with hyprland.
+- name: Fedora installation with hyprland
   hosts: localhost
   connection: local
   gather_facts: true
@@ -9,6 +9,7 @@
     - dnf-config
     - post-install 
     - ssh 
+    - connect
     - utilities 
     - fonts
     - dotfiles

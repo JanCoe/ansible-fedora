@@ -1,4 +1,4 @@
-dev_tools: ["@development-tools", cmake, curl, gcc, make, pkgconfig, openssl-devel]
+dev_tools: ["@development-tools", cmake, curl, gcc, hugo, make, pkgconfig, openssl-devel]
 cli_tools:
   - asciidoctor
   - bat

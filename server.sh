@@ -3,7 +3,7 @@
 set -euo pipefail
 
 directory="$HOME"/Projects/ansible-fedora
-command=(sudo ansible-playbook server.yml)
+command=(ansible-playbook -K -u "$USER" playbook.yml)
 
 read -s -r -p "Enter your sudo password: " password
 echo
