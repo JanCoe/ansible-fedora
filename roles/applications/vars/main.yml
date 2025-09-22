@@ -8,6 +8,7 @@ apps:
   - vivaldi-stable 
   - wezterm
   - yazi
+  - zathura
   - zoxide
 flatpaks:
   - ch.protonmail.protonmail-bridge
