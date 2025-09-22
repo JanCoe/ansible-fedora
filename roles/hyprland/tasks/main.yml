@@ -12,6 +12,7 @@
       - hyprpaper
       - hyprshot
       - mako 
+      - sddm
       - uwsm
       - waybar
       - wofi

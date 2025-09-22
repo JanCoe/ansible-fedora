@@ -54,7 +54,7 @@
 
 - name: Apps to connect iPhone
   become: true
-  asible.builtin.dnf:
+  ansible.builtin.dnf:
     name:
       - libimobiledevice-utils
       - fuse

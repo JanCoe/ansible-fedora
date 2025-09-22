@@ -17,5 +17,5 @@
     - applications
     - containers
     - development
-    - development-rust
+    # - development-rust
     - remove
