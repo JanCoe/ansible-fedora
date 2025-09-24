@@ -6,6 +6,7 @@
   become: true
   ansible.builtin.dnf:
     name:
+      - fuzzel
       - hyprland
       - hyprland-qtutils
       - hyprlock
