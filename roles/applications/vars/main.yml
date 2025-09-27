@@ -4,6 +4,7 @@ apps:
   - neomutt
   - neovim
   - onedrive
+  - qbittorrent
   - thunderbird
   - vivaldi-stable
   - wezterm
