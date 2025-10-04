@@ -21,21 +21,39 @@
     gpgcheck: 1
     gpgkey: https://repo.vivaldi.com/archive/linux_signing_key.pub
 
-- name: Download Zoom rpm
-  ansible.builtin.get_url:
-    url: "https://zoom.us/client/latest/zoom_x86_64.rpm"
-    dest: "/tmp/zoom.rpm"
-    mode: "0644"
+- name: Add Zoom repository
+  become: true
+  ansible.builtin.yum_repository:
+    name: zoom
+    description: Zoom repository
+    baseurl: https://zoom.us/linux/rpm
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://zoom.us/linux/download/pubkey
 
-- name: Install Zoom rpm
+- name: Install Zoom
+  become: true
   ansible.builtin.dnf:
-    name: "/tmp/zoom.rpm"
+    name: zoom
     state: present
 
-- name: Clean up RPM
-  ansible.builtin.file:
-    path: "/tmp/zoom.rpm"
-    state: absent
+#- name: Download Zoom rpm
+#  ansible.builtin.get_url:
+#    url: "https://zoom.us/client/latest/zoom_x86_64.rpm"
+#    dest: "/tmp/zoom.rpm"
+#    mode: "0644"
+
+#- name: Install Zoom rpm
+#  become: true 
+#  ansible.builtin.dnf:
+#    name: "/tmp/zoom.rpm"
+#    state: present
+
+#- name: Clean up RPM
+#  become: true 
+#  ansible.builtin.file:
+#    path: "/tmp/zoom.rpm"
+#    state: absent
 
 - name: Install applications
   become: true
@@ -43,13 +61,18 @@
     name: "{{ apps }}"
     state: present
 
-- name: Install Flatpak apps (user)
+- name: Ensure Flathub remote exists (system)
   become: true
-  become_user: "{{ real_user }}"
+  ansible.builtin.command:
+    cmd: >
+      flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Install Flatpak apps (system)
+  become: true
   community.general.flatpak:
     name: "{{ item }}"
     state: present
-    method: user
+    method: system
   loop: "{{ flatpaks }}"
 
 - name: Apps to connect iPhone
@@ -59,4 +82,3 @@
       - libimobiledevice-utils
       - fuse
     state: present
-

@@ -1,5 +1,6 @@
 - name: Clone dotfiles repo if not already present
-  become: false
+  become: true
+  become_user: "{{ real_user }}" 
   ansible.builtin.git:
     repo: "https://github.com/JanCoe/dotfiles.git"
     dest: "/home/{{ real_user }}/.dotfiles"
@@ -18,8 +19,7 @@
 #    name: stow
 #    state: present
 #  when: ansible_facts['os_family'] == "Darwin"
-#  become: false
-#  become_user: "{{ real_user }}"
+#  become: true 
 
 - name: Delete dotfiles that will conflict
   ansible.builtin.file:
@@ -33,19 +33,22 @@
     - "/home/{{ real_user }}/.profile"
 
 - name: Run `stow .` from .dotfiles root
-  become: false
+  become: true
+  become_user: "{{ real_user }}"
   ansible.builtin.command: stow .
   args:
     chdir: "/home/{{ real_user }}/.dotfiles"
 
-#- name: Clone tmux plugins
-#  become: false
-#  ansible.builtin.git:
-#    repo: "https://github.com/tmux-plugins/tpm"
-#    dest: "/home/{{ real_user }}/.config/tmux/plugins/tpm"
-#    version: main
-#    update: no
+- name: Clone tmux plugins
+  become: true
+  become_user: "{{ real_user }}" 
+  ansible.builtin.git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "/home/{{ real_user }}/.config/tmux/plugins/tpm"
+    version: main
+    update: no
 
-#- name: Install tmux plugins
-#  become: false
-#  ansible.builtin.command: /"home/{{ real_user }}/.config/tmux/plugins/tpm/bin/install_plugins"
+- name: Install tmux plugins
+  become: true
+  become_user: "{{ real_user }}"
+  ansible.builtin.command: "/home/{{ real_user }}/.config/tmux/plugins/tpm/bin/install_plugins"

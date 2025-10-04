@@ -1,24 +1,29 @@
 - name: Install OpenSSH server package
+  become: true
   ansible.builtin.dnf:
     name: openssh-server
     state: present
 
 - name: Start and enable SSH service
+  become: true
   ansible.builtin.systemd:
     name: sshd
     state: started
     enabled: true
 
 - name: Allow SSH through firewall (firewalld)
+  become: true
   ansible.builtin.firewalld:
     service: ssh
     permanent: true
     state: enabled
 
 - name: Reload firewall to apply changes (firewalld)
+  become: true
   ansible.builtin.command: firewall-cmd --reload
 
 - name: Check SSH service status
+  become: true
   ansible.builtin.systemd:
     name: sshd
     state: started

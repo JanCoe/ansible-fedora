@@ -1,18 +1,22 @@
 - name: Install Rust on Fedora
   block:
-    - name: Install Rust toolchain.
-      become: true 
-      ansible.builtin.dnf:
-        name: rustup
-        state: present
-
-    - name: Install Rust toolchain
-      ansible.builtin.command:
-        cmd: rustup install stable
-      become: true 
+    - name: Ensure rustup is installed for user
+      become: true
       become_user: "{{ real_user }}"
+      ansible.builtin.shell: |
+        set -e
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        creates: "/home/{{ real_user }}/.cargo/bin/rustup"
       environment:
-        PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
+        HOME: "/home/{{ real_user }}"
+
+    - name: Install stable toolchain
+      become: true
+      become_user: "{{ real_user }}"
+      ansible.builtin.command:
+        cmd: "/home/{{ real_user }}/.cargo/bin/rustup install stable"
+      environment:
+        HOME: "/home/{{ real_user }}"
       args:
         creates: "/home/{{ real_user }}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu"
-  when: ansible_facts['os_family'] == "RedHat"

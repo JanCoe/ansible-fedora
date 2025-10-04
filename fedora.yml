@@ -3,14 +3,14 @@
   connection: local
   gather_facts: true
   vars:
-    real_user: "{{ lookup('env', 'SUDO_USER') | default(ansible_user_id) }}"
+    real_user: "{{ lookup('env', 'SUDO_USER') | default(lookup('env', 'USER')) | default(ansible_user_id) }}"
 
   roles:
     - dnf-config
     - post-install 
     - ssh 
     - connect
-    - utilities 
+    - utilities
     - fonts
     - dotfiles
     - hyprland

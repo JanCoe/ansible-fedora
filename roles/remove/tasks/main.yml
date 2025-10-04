@@ -1,7 +1,15 @@
-- name: Remove applications not wanted
+- name: Remove firefox if installed
   become: true
   ansible.builtin.dnf:
-    name:
-      - firefox 
-      - kitty
-    state: absent 
+    name: firefox
+    state: absent
+    allowerasing: true
+  ignore_errors: yes
+
+- name: Remove kitty if installed
+  become: true
+  ansible.builtin.dnf:
+    name: kitty
+    state: absent
+    allowerasing: true
+  ignore_errors: yes

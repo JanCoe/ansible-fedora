@@ -1,11 +1,6 @@
 apps:
-  # Just to make sure
-  - systemd
-  - bash
-  - coreutils
-  - dnf
-  - shadow-utils
-  - "@core" 
+  # Base
+  - "@core"
   # Media 
   - "@multimedia" 
   - gvfs
@@ -15,11 +10,9 @@ apps:
   - wireplumber
   # Utilities 
   - brightnessctl
-  - dnf-utils
   - dunst
   - fastfetch
   - gnome-keyring
-  - gvfs
   - htop
   - sddm
   - trash
@@ -27,8 +20,6 @@ apps:
   - xdg-desktop-portal
   - xdg-desktop-portal-wlr
   - xdg-utils
-  # Fonts
-  - fonts
   # Graphics stack
   - libxkbcommon
   - mesa-dri-drivers
@@ -36,16 +27,13 @@ apps:
   - wayland
   - xorg-x11-server-Xwayland
   # Input and user environment
-  - polkit
   - xdg-user-dirs
-  - dbus
   # Network
   - NetworkManager
   - NetworkManager-wifi
-  - nmapplet
   # Applications 
   - foot
   - Thunar
   - neovim
-  - zathora
-  - zathora-pdf-poppler
+  - zathura
+  - zathura-pdf-poppler

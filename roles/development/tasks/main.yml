@@ -33,16 +33,10 @@
 
 - name: Install PyCharm as a flatpak
   become: true
-  become_user: "{{ real_user }}"
   community.general.flatpak:
     name: com.jetbrains.PyCharm-Professional
     state: present
-    method: user
+    method: system 
 
-- name: Punch a hole in the sandbox to connect to dotfiles
-  ansible.builtin.command: flatpak override --user --filesystem=home --env=SHELL=/usr/bin/bash --env=TERM=xterm-256color com.jetbrains.PyCharm-Professional
-
-- name: Create Projects directory
-  ansible.builtin.file:
-    path: "/home/{{ real_user }}/Projects"
-    state: directory
+# - name: Punch a hole in the sandbox to connect to dotfiles
+#   ansible.builtin.command: flatpak override --user --filesystem=home --env=SHELL=/usr/bin/bash --env=TERM=xterm-256color com.jetbrains.PyCharm-Professional

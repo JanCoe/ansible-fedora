@@ -16,7 +16,6 @@
       - sddm
       - uwsm
       - waybar
-      - wofi
     state: present
 
 - name: Configure sddm to use Wayland
