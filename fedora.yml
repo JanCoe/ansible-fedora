@@ -6,16 +6,16 @@
     real_user: "{{ lookup('env', 'SUDO_USER') | default(lookup('env', 'USER')) | default(ansible_user_id) }}"
 
   roles:
-    - dnf-config
-    - post-install 
-    - ssh 
-    - connect
-    - utilities
-    - fonts
-    - dotfiles
-    - hyprland
-    - applications
-    - containers
-    - development
+    #- dnf-config
+    #- post-install 
+    #- ssh 
+    #- connect
+    #- utilities
+    #- fonts
+    #- dotfiles
+    #- hyprland
+    #- applications
+    #- containers
+    #- development
     - development-rust
     - remove

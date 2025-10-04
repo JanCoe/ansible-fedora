@@ -4,8 +4,13 @@ I start with the Sway Spin and add hyprland from there. In future, investigate d
 
 The process for installing a new machine is:
 - Install Fedora image and reboot.
-- Run fedora.sh script in the root directory of this repo.
+- Set up internet connection (ethernet or wifi).
+- Run fedora.sh script that is located in the root directory of this repo.
 
-Remaining manual steps:
-- gh auth login
-- edit /etc/hosts to reflect IP addresses on network
+Pre-steps:
+- Set up .smbcredentials file in home directory for NAS automounting
+
+Post-steps:
+- tailscale up (because it requires authentication)
+- gh auth login (because it requires authentication)
+- Edit /etc/hosts to reflect IP addresses on network

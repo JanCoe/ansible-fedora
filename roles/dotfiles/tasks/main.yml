@@ -45,7 +45,7 @@
   ansible.builtin.git:
     repo: "https://github.com/tmux-plugins/tpm"
     dest: "/home/{{ real_user }}/.config/tmux/plugins/tpm"
-    version: main
+    version: master 
     update: no
 
 - name: Install tmux plugins

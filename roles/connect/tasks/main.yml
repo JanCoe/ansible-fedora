@@ -5,15 +5,11 @@
     state: present
 
 - name: Enable and start Tailscale service
+  become: true
   ansible.builtin.systemd: 
     name: tailscaled
     enabled: yes
     state: started
-
-- name: Bring up Tailscale
-  ansible.builtin.command: tailscale up
-  register: tailscale_result
-  changed_when: "'already' not in tailscale_result.stderr"
 
 - name: Ensure NAS music share is automounted
   ansible.posix.mount:
