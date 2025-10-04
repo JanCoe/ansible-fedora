@@ -21,12 +21,3 @@
   ansible.builtin.dnf:
     name: "{{ fonts + themes + apps }}"
     state: present
-
-# What is destination?
-# - name: Clone Obsidian style
-#   become: false
-#  ansible.builtin.git:
-#    repo: "https://github.com/EndlessReform/obsidian-nord-muted.git"
-#    dest: # What should this be? 
-#    version:
-#    update: no

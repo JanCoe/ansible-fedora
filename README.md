@@ -14,3 +14,5 @@ Post-steps:
 - tailscale up (because it requires authentication)
 - gh auth login (because it requires authentication)
 - Edit /etc/hosts to reflect IP addresses on network
+- Log into Obsidian and connect to vault (themes are stored inside vault)
+- Set Vivaldi theme
