@@ -11,6 +11,7 @@ apps:
   - yazi
   - zathura
   - zoxide
+  - 1password
 flatpaks:
   - ch.protonmail.protonmail-bridge
   - com.github.tchx84.Flatseal
