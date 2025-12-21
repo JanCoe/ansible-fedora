@@ -10,6 +10,7 @@ apps:
   - wireplumber
   # Utilities 
   - brightnessctl
+  - dnf-utils
   - dunst
   - fastfetch
   - gnome-keyring

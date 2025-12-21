@@ -16,7 +16,7 @@
     src: "//nas/music"
     path: "/home/{{ real_user }}/Media/Music"
     fstype: cifs
-    opts: "credentials=/home/{{ real_user }}/.smbcredentials,iocharset=utf8,noauto,x-systemd.automount,x-systemd.idle-timeout=600"
+    opts: "credentials=/home/{{ real_user }}/.smbcredentials,iocharset=utf8,noauto,x-systemd.automount,_netdev,x-systemd.idle-timeout=600"
     state: mounted
 
 - name: Ensure NAS movie share is automounted
@@ -24,7 +24,7 @@
     src: "//nas/movie"
     path: "/home/{{ real_user }}/Media/Movie"
     fstype: cifs
-    opts: "credentials=/home/{{ real_user }}/.smbcredentials,iocharset=utf8,noauto,x-systemd.automount,x-systemd.idle-timeout=600"
+    opts: "credentials=/home/{{ real_user }}/.smbcredentials,iocharset=utf8,noauto,x-systemd.automount,_netdev,x-systemd.idle-timeout=600"
     state: mounted
 
 - name: Ensure NAS photo share is automounted
@@ -32,5 +32,5 @@
     src: "//nas/photo"
     path: "/home/{{ real_user }}/Media/Photo"
     fstype: cifs
-    opts: "credentials=/home/{{ real_user }}/.smbcredentials,iocharset=utf8,noauto,x-systemd.automount,x-systemd.idle-timeout=600"
+    opts: "credentials=/home/{{ real_user }}/.smbcredentials,iocharset=utf8,noauto,x-systemd.automount,_netdev,x-systemd.idle-timeout=600"
     state: mounted
