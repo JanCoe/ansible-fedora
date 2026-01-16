@@ -12,19 +12,6 @@
   become: true
   ansible.builtin.command: dnf copr enable lihaohong/yazi -y
 
-- name: Add nushell repo using template
-  become: true
-  ansible.builtin.template:
-    src: yum.repo.j2
-    dest: /etc/yum.repos.d/fury-nushell.repo
-    mode: '0644'
-  vars:
-    repo_id: gemfury-nushell
-    repo_name: Gemfury Nushell Repo
-    baseurl: https://yum.fury.io/nushell/
-    gpgcheck: 0
-    gpgkey: https://yum.fury.io/nushell/gpg.key
-
 - name: Install CLI tools
   become: true
   ansible.builtin.dnf:

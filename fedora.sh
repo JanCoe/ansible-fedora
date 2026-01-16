@@ -2,15 +2,13 @@
 
 set -euo pipefail
 
-directory="$HOME"/Projects/ansiible-fedora
-playbook=$0
-command=(sudo ansible-playbook -K -u "$USER" "$playbook")
-
-read -s -r -p "Enter your sudo password: " password
-echo
+directory="$HOME"/Projects/ansible-fedora
+playbook=$1
+command=(ansible-playbook -K -u "$USER" "$playbook")
 
 echo "==> Installing ansible and git..."
-echo "$password" | sudo -S dnf install -y ansible git
+sudo -v
+sudo dnf install -y ansible git
 
 if [[ ! -d "$directory" ]]; then
     echo "==> Cloning ansible-fedora..."

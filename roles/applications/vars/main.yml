@@ -6,6 +6,7 @@ apps:
   - onedrive
   - qbittorrent
   - thunderbird
+  - uwsm
   - vivaldi-stable
   - wezterm
   - yazi

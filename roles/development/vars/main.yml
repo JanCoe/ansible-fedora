@@ -9,7 +9,6 @@ cli_tools:
   - git
   - git-lfs
   - neovim
-  - nushell
   - ripgrep
   - ruff
   - ShellCheck
