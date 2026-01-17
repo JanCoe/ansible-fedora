@@ -3,6 +3,7 @@ cargo_packages:
   - cargo-watch
   - du-dust
   - dua 
+  - eza
   - hyperfine
   - starship
   - tokei
