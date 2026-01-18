@@ -1,5 +1,4 @@
 - name: Get Fedora version
-  become: true
   ansible.builtin.command: rpm -E %fedora
   register: fedora_version
   changed_when: false
@@ -7,15 +6,14 @@
 - name: Add RPM Fusion Repository
   become: true
   ansible.builtin.dnf:
-    # name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version.stdout }}.noarch.rpm"
-    name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-43.noarch.rpm"
+    name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version.stdout | trim }}.noarch.rpm"
     disable_gpg_check: true
     state: "present"
 
 - name: Add RPM Non-Free Fusion Repository
   become: true
   ansible.builtin.dnf:
-    name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-43.noarch.rpm"
+    name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ fedora_version.stdout | trim }}.noarch.rpm"
     disable_gpg_check: true
     state: present
 
@@ -51,8 +49,3 @@
   become: true
   become_user: "{{ real_user }}"
   ansible.builtin.command: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
-
-# This pulls in all firmware. Look for ways to slim this down. Is it needed?
-#- name: Install all tainted firmware packages.
-#  become: true
-#  ansible.builtin.command: dnf --repo=rpmfusion-nonfree-tainted install '*-firmware' -y

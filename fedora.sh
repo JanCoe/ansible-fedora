@@ -4,7 +4,7 @@ set -euo pipefail
 
 directory="$HOME"/Projects/ansible-fedora
 playbook=$1
-command=(ansible-playbook -K -u "$USER" "$playbook")
+command=(sudo ansible-playbook -K -u "$USER" "$playbook")
 
 echo "==> Installing ansible and git..."
 sudo -v

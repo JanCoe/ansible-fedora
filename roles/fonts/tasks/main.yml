@@ -8,13 +8,16 @@
     state: directory
     owner: "{{ real_user }}"
     mode: "0755"
+  become: true
+  become_user: "{{ real_user }}"
 
 - name: Clone the Nordic theme repo
-  become: false
   ansible.builtin.git:
     repo: "https://github.com/EliverLara/Nordic.git"
     dest: "/home/{{ real_user }}/.themes/Nordic"
     update: no
+  become: true
+  become_user: "{{ real_user }}"
 
 - name: Install fonts and themes
   become: true
