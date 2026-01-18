@@ -3,7 +3,7 @@
   ansible.builtin.dnf:
     name: firefox
     state: absent
-    allowerasing: true
+    allow_erasing: true
   ignore_errors: yes
 
 - name: Remove kitty if installed
@@ -11,5 +11,5 @@
   ansible.builtin.dnf:
     name: kitty
     state: absent
-    allowerasing: true
+    allow_erasing: true
   ignore_errors: yes

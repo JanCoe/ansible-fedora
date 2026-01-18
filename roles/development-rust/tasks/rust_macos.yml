@@ -4,13 +4,12 @@
       community.general.brew:
         name: rustup-init
         state: present
-      become: false
+      become: true
       become_user: "{{ real_user }}"
 
     - name: Run rustup-init (non-interactive)
       ansible.builtin.command: rustup-init -y
       become: false
-      become_user: "{{ real_user }}"
       environment:
         PATH: "/home/{{ real_user }}/.cargo/bin:{{ ansible_env.PATH }}"
       args:

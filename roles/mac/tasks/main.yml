@@ -6,7 +6,6 @@
 - name: Install Xcode Command Line Tools (if not installed)
   ansible.builtin.command: xcode-select --install
   when: xcode_select.rc != 0
-  async: 0
   poll: 0
   ignore_errors: true 
 

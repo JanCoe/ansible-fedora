@@ -7,6 +7,7 @@
     state: present 
 
 - name: Start and enable docker service
+  become: true
   ansible.builtin.systemd:
     name: docker 
     state: started

@@ -13,7 +13,7 @@
 
 - name: Allow SSH through firewall (firewalld)
   become: true
-  ansible.builtin.firewalld:
+  ansible.posix.firewalld:
     service: ssh
     permanent: true
     state: enabled

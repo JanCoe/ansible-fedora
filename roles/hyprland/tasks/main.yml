@@ -1,6 +1,6 @@
 - name: Enable copr repo to get latest version
   become: true
-  ansible.builtin.command: dnf copr enable ashbuk/Hyprland-Fedora
+  ansible.builtin.command: dnf copr enable ashbuk/Hyprland-Fedora -y
 
 - name: Install hyprland compositor and dynamic tiling window manager and complementary apps
   become: true
