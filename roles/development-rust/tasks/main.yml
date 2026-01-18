@@ -25,6 +25,7 @@
       - typst-cli
     state: present
     executable: "/home/{{ real_user }}/.cargo/bin/cargo"
+    args: --locked
   become: true
   become_user: "{{ real_user }}"
   environment:
