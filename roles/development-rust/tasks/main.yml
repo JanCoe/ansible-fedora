@@ -13,8 +13,8 @@
 - name: Install Cargo packages
   community.general.cargo:
     name: 
-      - cargo-update
       - cargo-udeps
+      - cargo-update
       - cargo-watch
       - du-dust
       - dua
@@ -22,6 +22,7 @@
       - hyperfine
       - starship
       - tokei
+      - typst-cli
     state: present
     executable: "/home/{{ real_user }}/.cargo/bin/cargo"
   become: true
