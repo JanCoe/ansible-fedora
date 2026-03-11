@@ -13,6 +13,7 @@
 - name: Install Cargo packages
   community.general.cargo:
     name: 
+      - cargo-outdated
       - cargo-udeps
       - cargo-update
       - cargo-watch
