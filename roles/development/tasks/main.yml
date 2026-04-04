@@ -1,7 +1,7 @@
 - name: Install development tools
   become: true
   ansible.builtin.dnf:
-    name: "{{ dev_tools }}"
+    name: "{{ dev }}"
     state: present
 
 - name: Enable wezterm Copr repository
@@ -15,7 +15,7 @@
 - name: Install CLI tools
   become: true
   ansible.builtin.dnf:
-    name: "{{ cli_tools }}"
+    name: "{{ cli }}"
     state: present
 
 - name: Install PyCharm as a flatpak

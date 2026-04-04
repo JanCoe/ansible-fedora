@@ -20,3 +20,6 @@ Post-steps:
 - Edit /etc/hosts to reflect IP addresses on network
 - Log into Obsidian and connect to vault (themes are stored inside vault)
 - Set Vivaldi theme
+- Download Proton Bridge
+- Setup mail in Vivaldi
+- Install 1Password in Vivaldi

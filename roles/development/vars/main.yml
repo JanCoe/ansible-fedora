@@ -1,15 +1,17 @@
-dev_tools:
+dev:
   - "@development-tools"
+  - alsa-lib-devel
   - cmake
   - curl
   - gcc
   - hugo
   - make
+  - perl-open
   - pkgconfig
   - openssl-devel
   - musl-gcc
   - musl-devel
-cli_tools:
+cli:
   - asciidoctor
   - bat
   - eza
