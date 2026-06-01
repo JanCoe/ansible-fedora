@@ -6,6 +6,7 @@ apps:
   - neovim
   - onedrive
   - qbittorrent
+  - syncthing
   - thunderbird
   - uwsm
   - vivaldi-stable
