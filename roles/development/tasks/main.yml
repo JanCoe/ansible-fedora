@@ -23,11 +23,25 @@
   community.general.flatpak:
     name: com.jetbrains.PyCharm-Professional
     state: present
-    method: system 
+    method: system
 
 - name: Install RustRover as a flatpak
   become: true
   community.general.flatpak:
     name: com.jetbrains.RustRover
     state: present
-    method: system 
+    method: system
+
+- name: Create Hyprland stubs directory
+  become: true
+  ansible.builtin.file:
+    path: /usr/share/hypr/stubs
+    state: directory
+    mode: "0755"
+
+- name: Install Hyprland Lua meta stubs
+  become: true
+  ansible.builtin.copy:
+    src: hl.meta.lua
+    dest: /usr/share/hypr/stubs/hl.meta.lua
+    mode: "0644"
