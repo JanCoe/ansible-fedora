@@ -12,7 +12,7 @@
 
 - name: Install Cargo packages
   community.general.cargo:
-    name: 
+    name:
       - cargo-expand
       - cargo-outdated
       - cargo-udeps
@@ -21,6 +21,7 @@
       - du-dust
       - dua
       - eza
+      - flamegraph
       - hyperfine
       - samply
       - starship

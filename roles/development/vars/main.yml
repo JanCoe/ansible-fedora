@@ -4,11 +4,15 @@ dev:
   - cmake
   - curl
   - gcc
+  - gnuplot
   - hugo
   - make
+  - patchelf
+  - perf
   - perl-open
   - pkgconfig
   - openssl-devel
+  - openblas-devel
   - musl-gcc
   - musl-devel
 cli:
