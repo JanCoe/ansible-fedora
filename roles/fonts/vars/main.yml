@@ -1,7 +1,7 @@
-fonts: 
+fonts:
   - fonts
   - ibm-plex-sans-fonts
-  - ibm-plex-serif-fonts 
+  - ibm-plex-serif-fonts
   - jetbrains-mono-fonts
   - rsms-inter-fonts
 themes:
@@ -9,5 +9,5 @@ themes:
   - papirus-icon-theme
 apps:
   - gtk2
-  - gtk-murrine-engine  # for GTK themes to render correctly
-  - lxappearance  # to set GTK appearance 
+  - gtk-murrine-engine # for GTK themes to render correctly
+  - lxappearance # to set GTK appearance

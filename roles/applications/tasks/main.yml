@@ -13,7 +13,7 @@
   ansible.builtin.template:
     src: yum.repo.j2
     dest: /etc/yum.repos.d/vivaldi.repo
-    mode: '0644'
+    mode: "0644"
   vars:
     repo_id: vivaldi
     repo_name: vivaldi
