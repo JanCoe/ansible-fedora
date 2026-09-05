@@ -4,6 +4,7 @@ dev:
   - cmake
   - curl
   - gcc
+  - git-delta
   - gnuplot
   - hugo
   - make
