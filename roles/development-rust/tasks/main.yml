@@ -20,7 +20,6 @@
       - cargo-watch
       - du-dust
       - dua
-      - eza
       - flamegraph
       - hyperfine
       - samply
