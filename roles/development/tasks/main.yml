@@ -45,3 +45,13 @@
     src: hl.meta.lua
     dest: /usr/share/hypr/stubs/hl.meta.lua
     mode: "0644"
+
+- name: Install uv tools required at editor and agent level
+  ansible.builtin.command: uv tool install '{{ item.package }}'
+  args:
+    creates: ~/.local/bin/{{ item.binary }}
+  loop:
+    - { package: "pyright[nodejs]", binary: pyright-langserver }
+    - { package: ruff, binary: ruff }
+    - { package: mypy, binary: mypy }
+    - { package: opentimestamps-client, binary: opentimestamps-client }

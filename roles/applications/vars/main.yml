@@ -11,6 +11,7 @@ apps:
   - uwsm
   - vivaldi-stable
   - wezterm
+  - xournalpp
   - yazi
   - zathura
   - zoxide
