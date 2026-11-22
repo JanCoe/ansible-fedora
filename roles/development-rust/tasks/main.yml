@@ -16,7 +16,9 @@
       - cargo-audit
       - cargo-edit
       - cargo-expand
+      - cargo-mutants
       - cargo-outdated
+      - cargo-tarpaulin
       - cargo-udeps
       - cargo-update
       - cargo-watch
