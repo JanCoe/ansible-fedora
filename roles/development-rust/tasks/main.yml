@@ -13,6 +13,7 @@
 - name: Install Cargo packages
   community.general.cargo:
     name:
+      - cargo-audit
       - cargo-edit
       - cargo-expand
       - cargo-outdated
